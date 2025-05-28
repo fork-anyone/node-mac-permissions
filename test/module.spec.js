@@ -29,6 +29,7 @@ describe('node-mac-permissions', () => {
         'location',
         'microphone',
         'music-library',
+        'notifications',
         'photos-add-only',
         'photos-read-write',
         'reminders',
@@ -36,7 +37,7 @@ describe('node-mac-permissions', () => {
         'screen',
       ]
 
-      const statuses = ['not determined', 'denied', 'authorized', 'restricted']
+      const statuses = ['not determined', 'denied', 'authorized', 'restricted', 'provisional']
       for (const type of types) {
         const status = getAuthStatus(type)
         expect(statuses).to.contain(status)

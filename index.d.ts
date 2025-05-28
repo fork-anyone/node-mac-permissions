@@ -15,7 +15,7 @@ export function askForPhotosAccess(accessType?: 'add-only' | 'read-write'): Prom
 export function askForRemindersAccess(): Promise<Omit<PermissionType, 'restricted'>>
 export function askForSpeechRecognitionAccess(): Promise<Omit<PermissionType, 'restricted'>>
 export function askForScreenCaptureAccess(openPreferences?: boolean): undefined
-export function getAuthStatus(authType: AuthType): PermissionType | 'not determined'
+export function getAuthStatus(authType: AuthType): PermissionType | 'not determined' | 'provisional' | 'limited'
 
 export type AuthType =
   | 'accessibility'
@@ -28,6 +28,7 @@ export type AuthType =
   | 'location'
   | 'microphone'
   | 'music-library'
+  | 'notifications'
   | 'photos-add-only'
   | 'photos-read-write'
   | 'reminders'

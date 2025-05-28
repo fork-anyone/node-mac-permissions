@@ -13,6 +13,7 @@ function getAuthStatus(type) {
     'location',
     'microphone',
     'music-library',
+    'notifications',
     'photos-add-only',
     'photos-read-write',
     'reminders',

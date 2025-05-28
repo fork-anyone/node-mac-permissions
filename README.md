@@ -47,6 +47,7 @@ This native Node.js module allows you to manage an app's access to:
 - Reminders
 - Screen Capture
 - Speech Recognition
+- Notifications
 
 If you need to ask for permissions, your app must be allowed to ask for permission :
 
@@ -59,9 +60,9 @@ If you're using macOS 12.3 or newer, you'll need to ensure you have Python insta
 
 ### `permissions.getAuthStatus(type)`
 
-- `type` String - The type of system component to which you are requesting access. Can be one of `accessibility`, `bluetooth`, `calendar`, `camera`, `contacts`, `full-disk-access`, `input-monitoring`, `location`, `microphone`,`photos`, `reminders`, `screen`, or `speech-recognition`.
+- `type` String - The type of system component to which you are requesting access. Can be one of `accessibility`, `bluetooth`, `calendar`, `camera`, `contacts`, `full-disk-access`, `input-monitoring`, `location`, `microphone`,`notifications`, `photos`, `reminders`, `screen`, or `speech-recognition`.
 
-Returns `String` - Can be one of `not determined`, `denied`, `authorized`, or `restricted`.
+Returns `String` - Can be one of `not determined`, `denied`, `authorized`, `limited`, `provisional`, or `restricted`.
 
 Checks the authorization status of the application to access `type` on macOS.
 
@@ -72,6 +73,7 @@ Return Value Descriptions:
 - `denied` - The user explicitly denied access to `type` data for the application.
 - `authorized` - The application is authorized to access `type` data.
 - `limited` - The application is authorized for limited access to `type` data. Currently only applicable to the `photos` type.
+- 'provisional' - The application is provisionally authorized to access `type` data. Currently only applicable to the `notifications` type.
 
 **Notes:**
 
@@ -96,6 +98,7 @@ const types = [
   'location',
   'microphone',
   'music-library',
+  'notifications',
   'photos-add-only',
   'photos-read-write',
   'reminders',

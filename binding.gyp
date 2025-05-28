@@ -33,7 +33,8 @@
         "-framework IOKit",
         "-framework Photos",
         "-framework Speech",
-        "-framework StoreKit"
+        "-framework StoreKit",
+        "-framework UserNotifications",
       ]
     }
   }]

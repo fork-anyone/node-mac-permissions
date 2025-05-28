@@ -13,6 +13,7 @@
 #import <Photos/Photos.h>
 #import <Speech/Speech.h>
 #import <StoreKit/StoreKit.h>
+#import <UserNotifications/UserNotifications.h>
 #import <pwd.h>
 
 /***** HELPER FUNCTIONS *****/
@@ -22,6 +23,7 @@ const std::string kDenied{"denied"};
 const std::string kRestricted{"restricted"};
 const std::string kNotDetermined{"not determined"};
 const std::string kLimited{"limited"};
+const std::string kProvisional{"provisional"};
 
 // Check if a bundle ID is valid (i.e., corresponds to an installed app)
 bool IsValidBundleID(NSString *bundleID) {
@@ -99,6 +101,19 @@ StringFromMusicLibraryStatus(SKCloudServiceAuthorizationStatus status)
     return kDenied;
   case SKCloudServiceAuthorizationStatusRestricted:
     return kRestricted;
+  default:
+    return kNotDetermined;
+  }
+}
+
+const std::string &StringFromNotificationStatus(UNAuthorizationStatus status) {
+  switch (status) {
+  case UNAuthorizationStatusAuthorized:
+    return kAuthorized;
+  case UNAuthorizationStatusDenied:
+    return kDenied;
+  case UNAuthorizationStatusProvisional:
+    return kProvisional;
   default:
     return kNotDetermined;
   }
@@ -376,6 +391,30 @@ std::string SpeechRecognitionAuthStatus() {
   return StringFromSpeechRecognitionStatus(status);
 }
 
+// Returns a status indicating whether the user has authorized
+// Notifications access.
+std::string NotificationAuthStatus() {
+  NSURL *bundle_url = [[NSBundle mainBundle] bundleURL];
+  if (!IsValidBundleID([bundle_url path])) {
+    return kNotDetermined;
+  }
+
+  __block std::string ret = "not determined";
+  dispatch_group_t g = dispatch_group_create();
+  dispatch_group_enter(g);
+
+  UNUserNotificationCenter *center =
+      [UNUserNotificationCenter currentNotificationCenter];
+  [center getNotificationSettingsWithCompletionHandler:^(
+              UNNotificationSettings *settings) {
+    ret = StringFromNotificationStatus(settings.authorizationStatus);
+    dispatch_group_leave(g);
+  }];
+
+  dispatch_group_wait(g, DISPATCH_TIME_FOREVER);
+  return ret;
+}
+
 // Returns a status indicating whether the user has authorized location
 // access.
 std::string LocationAuthStatus() {
@@ -444,6 +483,8 @@ Napi::Value GetAuthStatus(const Napi::CallbackInfo &info) {
     auth_status = MusicLibraryAuthStatus();
   } else if (type == "input-monitoring") {
     auth_status = InputMonitoringAuthStatus();
+  } else if (type == "notifications") {
+    auth_status = NotificationAuthStatus();
   }
 
   return Napi::Value::From(env, auth_status);
