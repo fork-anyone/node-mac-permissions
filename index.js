@@ -1,4 +1,7 @@
-const permissions = require('bindings')('permissions.node')
+const path = require('path')
+const binary = require('@mapbox/node-pre-gyp')
+const binding_path = binary.find(path.resolve(path.join(__dirname, './package.json')))
+const permissions = require(binding_path)
 
 function getAuthStatus(type) {
   const validTypes = [

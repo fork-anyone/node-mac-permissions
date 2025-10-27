@@ -1,21 +1,7 @@
 {
-  "name": "node-mac-permissions",
-  "version": "2.5.0",
+  "name": "@fork-anyone/node-mac-permissions",
+  "version": "2.6.0",
   "description": "A native node module to manage system permissions on macOS",
-  "main": "index.js",
-  "types": "index.d.ts",
-  "scripts": {
-    "build": "node-gyp rebuild",
-    "clean": "node-gyp clean",
-    "lint": "clang-format --dry-run -Werror permissions.mm && prettier --check index.js",
-    "format": "clang-format -i permissions.mm && prettier --write index.js",
-    "test": "./node_modules/.bin/mocha --reporter spec",
-    "prepare": "husky install"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/codebytere/node-mac-permissions.git"
-  },
   "keywords": [
     "permissions",
     "macos",
@@ -23,13 +9,44 @@
     "napi",
     "native"
   ],
-  "author": "Shelley Vohr <shelley.vohr@gmail.com>",
-  "license": "MIT",
+  "homepage": "https://github.com/codebytere/node-mac-permissions#readme",
   "bugs": {
     "url": "https://github.com/codebytere/node-mac-permissions/issues"
   },
-  "homepage": "https://github.com/codebytere/node-mac-permissions#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codebytere/node-mac-permissions.git"
+  },
+  "license": "MIT",
+  "author": "Shelley Vohr <shelley.vohr@gmail.com>",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "binary": {
+    "module_name": "node-mac-permissions",
+    "module_path": "./lib/binding/napi-{platform}-{arch}",
+    "remote_path": "./",
+    "package_name": "napi-{module_name}-{platform}-{arch}.tar.gz",
+    "host": "https://localhost"
+  },
+  "scripts": {
+    "build": "node-pre-gyp rebuild",
+    "postinstall": "npm run build",
+    "clean": "node-pre-gyp clean",
+    "format": "clang-format -i permissions.mm && prettier --write index.js",
+    "lint": "clang-format --dry-run -Werror permissions.mm && prettier --check index.js",
+    "prepare": "husky install",
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write"
+    ],
+    "*.mm": [
+      "clang-format -i"
+    ]
+  },
   "dependencies": {
+    "@mapbox/node-pre-gyp": "^2.0.0",
     "bindings": "^1.5.0",
     "node-addon-api": "^7.1.0"
   },
@@ -39,16 +56,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.5.0",
     "mocha": "^11.1.0",
-    "node-gyp": "^11.1.0",
     "prettier": "^3.5.3"
-  },
-  "lint-staged": {
-    "*.js": [
-      "prettier --write"
-    ],
-    "*.mm": [
-      "clang-format -i"
-    ]
   },
   "os": [
     "darwin"
