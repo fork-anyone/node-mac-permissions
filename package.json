@@ -1,6 +1,6 @@
 {
   "name": "@fork-anyone/node-mac-permissions",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "description": "A native node module to manage system permissions on macOS",
   "keywords": [
     "permissions",

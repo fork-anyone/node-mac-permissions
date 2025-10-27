@@ -16,7 +16,10 @@
     'dependencies': [
       "<!(node -p \"require('node-addon-api').gyp\")"
     ],
-    'defines': [ 'NAPI_DISABLE_CPP_EXCEPTIONS' ],
+    'defines': [ 
+      'NAPI_DISABLE_CPP_EXCEPTIONS',
+       'PACKAGE_VERSION="<!(node -p \"require(\\\"./package.json\\\").version\")"'
+    ],
     "xcode_settings": {
       "MACOSX_DEPLOYMENT_TARGET": "10.15",
       "SYSTEM_VERSION_COMPAT": 1,

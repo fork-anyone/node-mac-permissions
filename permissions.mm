@@ -430,7 +430,7 @@ std::string LocationAuthStatus() {
   }
 }
 
-// Returns a status indicating whether or not the user has authorized Photos
+// Returns a status indicating whether the user has authorized Photos
 // access.
 std::string PhotosAuthStatus(const std::string &access_level) {
   PHAuthorizationStatus status = PHAuthorizationStatusNotDetermined;
@@ -446,6 +446,12 @@ std::string PhotosAuthStatus(const std::string &access_level) {
 }
 
 /***** EXPORTED FUNCTIONS *****/
+
+// Returns the module version as a string.
+Napi::Value GetVersion(const Napi::CallbackInfo &info) {
+  Napi::Env env = info.Env();
+  return Napi::String::New(env, PACKAGE_VERSION);
+}
 
 // Returns the user's access consent status as a string.
 Napi::Value GetAuthStatus(const Napi::CallbackInfo &info) {
@@ -924,6 +930,8 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
               Napi::Function::New(env, AskForSpeechRecognitionAccess));
   exports.Set(Napi::String::New(env, "getAuthStatus"),
               Napi::Function::New(env, GetAuthStatus));
+  exports.Set(Napi::String::New(env, "version"),
+              Napi::Function::New(env, GetVersion));
   return exports;
 }
 

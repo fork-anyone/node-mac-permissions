@@ -110,4 +110,5 @@ module.exports = {
   askForSpeechRecognitionAccess: permissions.askForSpeechRecognitionAccess,
   askForScreenCaptureAccess,
   getAuthStatus,
+  version: permissions.version,
 }
