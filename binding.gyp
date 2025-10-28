@@ -38,7 +38,12 @@
         "-framework Speech",
         "-framework StoreKit",
         "-framework UserNotifications",
-      ]
+      ],
+      "DEBUG_INFORMATION_FORMAT": "dwarf-with-dsym",
+      "GCC_OPTIMIZATION_LEVEL": "0",
+      "GCC_GENERATE_DEBUGGING_SYMBOLS": "YES",
+      "OTHER_CFLAGS": ["-g", "-O0"],
+      "OTHER_CPLUSPLUSFLAGS": ["-g", "-O0", "-std=c++20", "-stdlib=libc++"]
     }
   },
   {
@@ -49,6 +54,19 @@
         {
           "files": [ "<(PRODUCT_DIR)/<(module_name).node" ],
           "destination": "<(module_path)"
+        },
+        {
+          "files": [
+            "<(PRODUCT_DIR)/<(module_name).node.dSYM"
+          ],
+          "destination": "<(module_path)",
+          "conditions": [
+            ['OS=="mac"', {
+              "files": [
+                "<(PRODUCT_DIR)/<(module_name).dSYM"
+              ]
+            }]
+          ]
         }
       ]
     }

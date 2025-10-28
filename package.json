@@ -1,6 +1,6 @@
 {
   "name": "@fork-anyone/node-mac-permissions",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "description": "A native node module to manage system permissions on macOS",
   "keywords": [
     "permissions",
@@ -8,6 +8,17 @@
     "node",
     "napi",
     "native"
+  ],
+  "files": [
+    "lib/",
+    "test",
+    "binding.gyp",
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "package.json",
+    "permissions.mm",
+    "README.md"
   ],
   "homepage": "https://github.com/codebytere/node-mac-permissions#readme",
   "bugs": {
