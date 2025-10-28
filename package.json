@@ -46,7 +46,8 @@
     "format": "clang-format -i permissions.mm && prettier --write index.js",
     "lint": "clang-format --dry-run -Werror permissions.mm && prettier --check index.js",
     "prepare": "husky install",
-    "test": "./node_modules/.bin/mocha --reporter spec"
+    "test": "./node_modules/.bin/mocha --reporter spec",
+    "prepublishOnly": "npm run build"
   },
   "lint-staged": {
     "*.js": [
